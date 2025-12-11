@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ключевые достижения и планы развития</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================== CSS VARIABLES ==================== */
+        :root {
+            --bg-dark: #0a0f14;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #16213e;
+            --accent-primary: #368fe0;
+            --accent-green: #3b9d5a;
+            --text-primary: #ffffff;
+            --text-secondary: #e5e5e5;
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+        }
+
+        /* ==================== GLOBAL STYLES ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes rotateGradient {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+        }
+
+        /* ==================== PROGRESS BAR ==================== */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-primary));
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+
+        /* ==================== SLIDE CONTAINER ==================== */
+        .presentation {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 4rem 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .container{
+            max-width: 1640px;
+            margin: 0 auto;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            z-index: 10;
+        }
+
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+
+        /* ==================== LOGO ==================== */
+        .logo {
+            position: absolute;
+            top: 2rem;
+            left: 3rem;
+            width: 120px;
+            height: auto;
+            z-index: 100;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* ==================== TYPOGRAPHY ==================== */
+        .slide h1 {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            background: var(--accent-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .slide h2 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: -0.01em;
+            background: var(--accent-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease 0.1s both;
+        }
+
+        .subtitle {
+            font-size: 1.8rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .role {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--accent-green);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        /* ==================== GLASS CARDS ==================== */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
+            border-color: var(--accent-primary);
+        }
+
+        /* ==================== GRID LAYOUT ==================== */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .overview-card {
+            text-align: left;
+        }
+
+        .overview-card h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .overview-card h3::before {
+            content: '▸ ';
+            color: var(--accent-primary);
+        }
+
+        .overview-card p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ==================== CONTENT LAYOUT ==================== */
+        .content-wrapper {
+            max-width: 1200px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .content-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .content-list li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .content-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            top: -5px;
+            color: var(--accent-primary);
+            font-weight: bold;
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .content-list li:hover {
+            color: var(--text-primary);
+            transform: translateX(10px);
+        }
+
+        .content-list li:hover::before {
+            color: var(--accent-green);
+        }
+
+        /* ==================== SPLIT LAYOUT ==================== */
+        .split-layout {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .split-card h3 {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .split-card h3::before {
+            content: '◆ ';
+            color: var(--accent-green);
+            margin-right: 0.5rem;
+        }
+
+        .split-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .split-card li {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .split-card li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            top: -5px;
+            color: var(--accent-primary);
+            font-size: 1.2rem;
+        }
+
+        .card-link {
+            margin-top: 1.5rem;
+            display: inline-block;
+            color: var(--accent-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .card-link:hover {
+            color: var(--accent-green);
+            transform: translateX(5px);
+        }
+
+        /* ==================== IMAGE GALLERY ==================== */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 1fr 1fr;
+            align-items: center;
+            gap: 1.5rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .image-gallery img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 2px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .image-gallery img:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 40px rgba(0, 217, 255, 0.4);
+        }
+
+        /* ==================== TITLE SLIDE ==================== */
+        .title-slide {
+            text-align: center;
+            align-items: center;
+        }
+
+        .title-slide .footer {
+            font-family: 'Space Mono', monospace;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            animation: fadeInUp 1s ease 0.8s both;
+        }
+
+        /* ==================== NAVIGATION ==================== */
+        .nav-controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 3rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .nav-btn:disabled:hover {
+            transform: none;
+            background: var(--glass-bg);
+            border-color: var(--glass-border);
+            box-shadow: none;
+        }
+
+        /* ==================== SLIDE COUNTER ==================== */
+        .slide-counter {
+            position: fixed;
+            bottom: 2rem;
+            left: 3rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            z-index: 1000;
+        }
+
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ==================== CUSTOM SCROLLBAR ==================== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-green);
+        }
+
+        /* ==================== RESPONSIVE DESIGN ==================== */
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 3rem 2rem;
+            }
+
+            .slide h1 {
+                font-size: 3.5rem;
+            }
+
+            .slide h2 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.4rem;
+            }
+
+            .overview-grid,
+            .split-layout,
+            .image-gallery {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+                left: 2rem;
+                top: 1.5rem;
+            }
+
+            .nav-controls {
+                right: 2rem;
+                bottom: 1.5rem;
+            }
+
+            .slide-counter {
+                left: 2rem;
+                bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide h1 {
+                font-size: 2.5rem;
+            }
+
+            .slide h2 {
+                font-size: 1.6rem;
+                margin-bottom: 2rem;
+            }
+
+            .content-list li,
+            .split-card li {
+                font-size: 0.9rem;
+            }
+
+            .nav-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Presentation Container -->
+    <div class="presentation" id="presentation">
+        <div class="logo">
+            <img src="https://lh3.google.com/u/0/d/1NkvA_TOSclT4JZ-jW5nsT3VoKO6t_OuL=w1917-h1956-iv1?auditContext=prefetch" alt="Logo">
+        </div>
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <div class="container">
+            <h1>Ключевые достижения<br>и планы развития</h1>
+            <p class="role">Frontend Developer</p>
+            <div class="footer">Saint Petersburg • 2025</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Overview Grid -->
+        <div class="slide">
+            <div class="container">
+            <h2>Обзор достижений</h2>
+            <div class="overview-grid">
+                <div class="glass-card overview-card">
+                    <h3>Дашборды мониторинга на ECharts</h3>
+                    <p>Настраиваемая система визуализации метрик</p>
+                </div>
+                <div class="glass-card overview-card">
+                    <h3>Редактор PromQL</h3>
+                    <p>Полнофункциональный инструмент для запросов</p>
+                </div>
+                <div class="glass-card overview-card">
+                    <h3>Архитектура компонентов</h3>
+                    <p>Переиспользуемые и масштабируемые решения</p>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Monitoring System -->
+        <div class="slide">
+            <div class="container">
+            <h2>Дашборды мониторинга на ECharts</h2>
+            <div class="content-wrapper glass-card">
+                <ul class="content-list">
+                    <li>3 типа визуализации: линейный график, столбчатая диаграмма, индикаторный график</li>
+                    <li>Гибкая система настройки внешнего вида (цвета, легенды, оси, пороговые значения)</li>
+                    <li>Множественные запросы с визуализацией нескольких метрик на одном графике</li>
+                    <li>Переиспользуемая архитектура компонентов для легкого добавления новых типов графиков</li>
+                </ul>
+            </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: PromQL Editor -->
+        <div class="slide">
+            <div class="container">
+            <h2>Редактор PromQL запросов</h2>
+            <div class="content-wrapper glass-card">
+                <ul class="content-list">
+                    <li>Динамическая подгрузка доступных метрик и операторов из системы мониторинга</li>
+                    <li>Реализация подсветки синтаксиса для повышения читаемости запросов</li>
+                    <li>Автодополнение метрик и операторов для ускорения написания запросов</li>
+                </ul>
+            </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Image Gallery -->
+        <div class="slide">
+            <div class="container">
+            <h2>Примеры реализации</h2>
+            <div class="image-gallery">
+                <img src="https://lh3.google.com/u/0/d/1zgpo8Oga0io4WTaUf4V0A1JWJhRdgm5W=w1917-h1245-iv1?auditContext=prefetch" alt="Screenshot 1">
+                <img src="https://lh3.google.com/u/0/d/1U0H0puy2ZlYGtUoaPMy_fNj0oEaySA8H=w1917-h1245-iv1?auditContext=prefetch" alt="Screenshot 2">
+                <img src="https://lh3.google.com/u/0/d/13kBc_dASDw8vdcHd-J-Ocp6EXobITGfA=w1917-h1245-iv1?auditContext=prefetch" alt="Screenshot 3">
+                <img src="https://lh3.google.com/u/0/d/16TicD8v4-RHcu2bvIvCCC4rdFuH9TwAW=w1917-h1245-iv1?auditContext=prefetch" alt="Screenshot 4">
+            </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Forms Refactoring -->
+        <div class="slide">
+            <div class="container">
+            <h2>Рефакторинг форм и состояния</h2>
+            <div class="split-layout">
+                <div class="glass-card split-card">
+                    <h3>Миграция на Ant Design Form</h3>
+                    <ul>
+                        <li>Redux → Ant Design Form</li>
+                        <li>Упрощение поддержки кода</li>
+                        <li>Улучшение производительности</li>
+                        <li>Снижение сложности архитектуры</li>
+                    </ul>
+                    <a href="https://gitlab.158-160-60-159.sslip.io/astra-monitoring-icl/admin-console/-/merge_requests/744/diffs" target="_blank" class="card-link">📎 MR #744</a>
+                </div>
+                <div class="glass-card split-card">
+                    <h3>Работа со сложными формами</h3>
+                    <ul>
+                        <li>Реализация многоуровневой валидации</li>
+                        <li>Управление состоянием</li>
+                        <li>Интеграция с различными API</li>
+                        <li>Оптимизация производительности и обработка граничных случаев</li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Code Quality -->
+        <div class="slide">
+            <div class="container">
+            <h2>Качество кода и процессы</h2>
+            <div class="content-wrapper glass-card">
+                <ul class="content-list">
+                    <li>Проведение код-ревью для других разработчиков</li>
+                    <li>Выявление и устранение технического долга в критических модулях</li>
+                    <li>Поддержка высоких стандартов кодирования</li>
+                </ul>
+            </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Future Plans -->
+        <div class="slide">
+            <div class="container">
+            <h2>Планы на будущее</h2>
+            <div class="split-layout">
+                <div class="glass-card split-card">
+                    <h3>Архитектура и паттерны</h3>
+                    <ul>
+                        <li>Проектирование масштабируемой и поддерживаемой архитектуры</li>
+                        <li>Внедрение продвинутых паттернов TypeScript</li>
+                        <li>Создание библиотеки переиспользуемых компонентов и утилит</li>
+                        <li>Повышение типобезопасности</li>
+                    </ul>
+                </div>
+                <div class="glass-card split-card">
+                    <h3>Команда и процессы</h3>
+                    <ul>
+                        <li>Взаимодействие с backend-командой для оптимизации API</li>
+                        <li>Менторство новых разработчиков при расширении команды</li>
+                        <li>Уменьшение количества багов через правильный дизайн компонентов</li>
+                        <li>Улучшение процессов разработки</li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Closing -->
+        <div class="slide title-slide">
+            <div class="container">
+            <h1>Спасибо!</h1>
+            <div class="footer">Saint Petersburg • Frontend Developer</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn">←</button>
+        <button class="nav-btn" id="nextBtn">→</button>
+    </div>
+
+    <!-- Slide Counter -->
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
+    </div>
+
+    <script>
+        // ==================== PRESENTATION LOGIC ====================
+
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentSlide = 0;
+
+        const progressBar = document.getElementById('progressBar');
+        const currentSlideElement = document.getElementById('currentSlide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        // ==================== UPDATE SLIDE ====================
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                }
+            });
+
+            // Update progress bar
+            const progress = ((currentSlide + 1) / totalSlides) * 100;
+            progressBar.style.width = progress + '%';
+
+            // Update counter
+            currentSlideElement.textContent = currentSlide + 1;
+
+            // Update button states
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === totalSlides - 1;
+        }
+
+        // ==================== NAVIGATION FUNCTIONS ====================
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // ==================== EVENT LISTENERS ====================
+
+        // Button navigation
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowRight':
+                case ' ':
+                    e.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    prevSlide();
+                    break;
+                case 'f':
+                case 'F':
+                    toggleFullscreen();
+                    break;
+            }
+        });
+
+        // Touch/Swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, false);
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, false);
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    prevSlide();
+                }
+            }
+        }
+
+        // ==================== FULLSCREEN ====================
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // ==================== INITIALIZATION ====================
+        updateSlide();
+    </script>
+</body>
+</html>
