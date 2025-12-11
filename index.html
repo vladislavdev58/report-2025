@@ -863,6 +863,27 @@
         }
     });
 
+    // Mouse wheel navigation
+    let wheelTimeout;
+    document.addEventListener('wheel', (e) => {
+        if (imageModal.classList.contains('active')) return;
+
+        e.preventDefault();
+
+        // Debounce wheel events to prevent rapid firing
+        if (wheelTimeout) return;
+
+        if (e.deltaY > 0) {
+            nextSlide();
+        } else if (e.deltaY < 0) {
+            prevSlide();
+        }
+
+        wheelTimeout = setTimeout(() => {
+            wheelTimeout = null;
+        }, 100); 
+    }, { passive: false });
+
     // Touch/Swipe support
     let touchStartX = 0;
     let touchEndX = 0;
