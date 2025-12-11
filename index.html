@@ -6,7 +6,8 @@
     <title>Ключевые достижения и планы развития</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Space+Mono:wght@400;700&display=swap"
+          rel="stylesheet">
 
     <style>
         /* ==================== CSS VARIABLES ==================== */
@@ -38,8 +39,12 @@
         }
 
         @keyframes rotateGradient {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
+            0%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
         }
 
         /* ==================== PROGRESS BAR ==================== */
@@ -77,7 +82,11 @@
             transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
         }
 
-        .container{
+        .container {
+            display: flex;
+            gap: 64px;
+            justify-content: space-between;
+            align-items: center;
             max-width: 1640px;
             margin: 0 auto;
         }
@@ -162,10 +171,43 @@
             transition: all 0.3s ease;
         }
 
-        .glass-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
-            border-color: var(--accent-primary);
+        /* Анимация при появлении слайда */
+        .slide.active .glass-card {
+            animation: cardHoverEffect 0.6s ease forwards;
+        }
+
+        /* Задержки для поочередного появления */
+        .slide.active .overview-grid .glass-card:nth-child(1),
+        .slide.active .split-layout .glass-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .slide.active .overview-grid .glass-card:nth-child(2),
+        .slide.active .split-layout .glass-card:nth-child(2) {
+            animation-delay: 0.35s;
+        }
+
+        .slide.active .overview-grid .glass-card:nth-child(3) {
+            animation-delay: 0.5s;
+        }
+
+        .slide.active .content-wrapper.glass-card {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes cardHoverEffect {
+            0% {
+                box-shadow: none;
+                border-color: var(--glass-border);
+            }
+            50% {
+                box-shadow: 0 20px 60px rgba(0, 217, 255, 0.3);
+                border-color: var(--accent-primary);
+            }
+            100% {
+                box-shadow: none;
+                border-color: var(--glass-border);
+            }
         }
 
         /* ==================== GRID LAYOUT ==================== */
@@ -599,28 +641,31 @@
     <!-- Slide 1: Title -->
     <div class="slide active title-slide">
         <div class="container">
-            <h1>Ключевые достижения<br>и планы развития</h1>
-            <p class="role">Frontend Developer</p>
-            <div class="footer">Saint Petersburg • 2025</div>
+            <div><h1>Ключевые достижения<br>и планы развития</h1>
+                <p class="role">Frontend Developer</p>
+                <div class="footer">Saint Petersburg • 2025</div>
+            </div>
         </div>
     </div>
 
     <!-- Slide 2: Overview Grid -->
     <div class="slide">
         <div class="container">
-            <h2>Обзор достижений</h2>
-            <div class="overview-grid">
-                <div class="glass-card overview-card">
-                    <h3>Дашборды мониторинга на ECharts</h3>
-                    <p>Настраиваемая система визуализации метрик</p>
-                </div>
-                <div class="glass-card overview-card">
-                    <h3>Редактор PromQL</h3>
-                    <p>Полнофункциональный инструмент для запросов</p>
-                </div>
-                <div class="glass-card overview-card">
-                    <h3>Архитектура компонентов</h3>
-                    <p>Переиспользуемые и масштабируемые решения</p>
+            <div>
+                <h2>Обзор достижений</h2>
+                <div class="overview-grid">
+                    <div class="glass-card overview-card">
+                        <h3>Дашборды мониторинга на ECharts</h3>
+                        <p>Настраиваемая система визуализации метрик</p>
+                    </div>
+                    <div class="glass-card overview-card">
+                        <h3>Редактор PromQL</h3>
+                        <p>Полнофункциональный инструмент для запросов</p>
+                    </div>
+                    <div class="glass-card overview-card">
+                        <h3>Архитектура компонентов</h3>
+                        <p>Переиспользуемые и масштабируемые решения</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -629,68 +674,72 @@
     <!-- Slide 3: Monitoring System -->
     <div class="slide">
         <div class="container">
-            <h2>Дашборды мониторинга на ECharts</h2>
-            <div class="content-wrapper glass-card">
-                <ul class="content-list">
-                    <li>3 типа визуализации: линейный график, столбчатая диаграмма, индикаторный график</li>
-                    <li>Гибкая система настройки внешнего вида (цвета, легенды, оси, пороговые значения)</li>
-                    <li>Множественные запросы с визуализацией нескольких метрик на одном графике</li>
-                    <li>Переиспользуемая архитектура компонентов для легкого добавления новых типов графиков</li>
-                </ul>
+            <div>
+                <h2>Дашборды мониторинга на ECharts</h2>
+                <div class="content-wrapper glass-card">
+                    <ul class="content-list">
+                        <li>3 типа визуализации: линейный график, столбчатая диаграмма, индикаторный график</li>
+                        <li>Гибкая система настройки внешнего вида (цвета, легенды, оси, пороговые значения)</li>
+                        <li>Множественные запросы с визуализацией нескольких метрик на одном графике</li>
+                        <li>Переиспользуемая архитектура компонентов для легкого добавления новых типов графиков</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="image-gallery" style="grid-template-columns: 1fr; width: 620px;">
+                <img src="./img/5.png" class="gallery-image" alt="">
+                <img src="./img/6.png" class="gallery-image" alt="">
             </div>
         </div>
     </div>
 
     <!-- Slide 4: PromQL Editor -->
     <div class="slide">
+        <h2>Редактор PromQL запросов</h2>
         <div class="container">
-            <h2>Редактор PromQL запросов</h2>
-            <div class="content-wrapper glass-card">
-                <ul class="content-list">
-                    <li>Динамическая подгрузка доступных метрик и операторов из системы мониторинга</li>
-                    <li>Реализация подсветки синтаксиса для повышения читаемости запросов</li>
-                    <li>Автодополнение метрик и операторов для ускорения написания запросов</li>
-                </ul>
+            <div>
+                <div class="content-wrapper glass-card">
+                    <ul class="content-list">
+                        <li>Динамическая подгрузка доступных метрик и операторов из системы мониторинга</li>
+                        <li>Реализация подсветки синтаксиса для повышения читаемости запросов</li>
+                        <li>Автодополнение метрик и операторов для ускорения написания запросов</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="image-gallery" style="grid-template-columns: 1fr; grid-template-rows: 1fr; width: 620px;">
+                <img src="./img/7.png" class="gallery-image" alt="">
             </div>
         </div>
     </div>
 
     <!-- Slide 5: Image Gallery -->
-    <div class="slide">
-        <div class="container">
-            <h2>Примеры реализации</h2>
-            <div class="image-gallery">
-                <img src="./img/1.jpg" alt="Screenshot 1" class="gallery-image">
-                <img src="./img/2.jpg" alt="Screenshot 2" class="gallery-image">
-                <img src="./img/3.jpg" alt="Screenshot 3" class="gallery-image">
-                <img src="./img/4.jpg" alt="Screenshot 4" class="gallery-image">
-            </div>
-        </div>
-    </div>
+
 
     <!-- Slide 6: Forms Refactoring -->
     <div class="slide">
         <div class="container">
-            <h2>Рефакторинг форм и состояния</h2>
-            <div class="split-layout">
-                <div class="glass-card split-card">
-                    <h3>Миграция на Ant Design Form</h3>
-                    <ul>
-                        <li>Redux → Ant Design Form</li>
-                        <li>Упрощение поддержки кода</li>
-                        <li>Улучшение производительности</li>
-                        <li>Снижение сложности архитектуры</li>
-                    </ul>
-                    <a href="https://gitlab.158-160-60-159.sslip.io/astra-monitoring-icl/admin-console/-/merge_requests/744/diffs" target="_blank" class="card-link">📎 MR #744</a>
-                </div>
-                <div class="glass-card split-card">
-                    <h3>Работа со сложными формами</h3>
-                    <ul>
-                        <li>Реализация многоуровневой валидации</li>
-                        <li>Управление состоянием</li>
-                        <li>Интеграция с различными API</li>
-                        <li>Оптимизация производительности и обработка граничных случаев</li>
-                    </ul>
+            <div>
+                <h2>Рефакторинг форм и состояния</h2>
+                <div class="split-layout">
+                    <div class="glass-card split-card">
+                        <h3>Миграция на Ant Design Form</h3>
+                        <ul>
+                            <li>Redux → Ant Design Form</li>
+                            <li>Упрощение поддержки кода</li>
+                            <li>Улучшение производительности</li>
+                            <li>Снижение сложности архитектуры</li>
+                        </ul>
+                        <a href="https://gitlab.158-160-60-159.sslip.io/astra-monitoring-icl/admin-console/-/merge_requests/744/diffs"
+                           target="_blank" class="card-link">📎 MR #744</a>
+                    </div>
+                    <div class="glass-card split-card">
+                        <h3>Работа со сложными формами</h3>
+                        <ul>
+                            <li>Реализация многоуровневой валидации</li>
+                            <li>Управление состоянием</li>
+                            <li>Интеграция с различными API</li>
+                            <li>Оптимизация производительности и обработка граничных случаев</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -699,13 +748,15 @@
     <!-- Slide 7: Code Quality -->
     <div class="slide">
         <div class="container">
-            <h2>Качество кода и процессы</h2>
-            <div class="content-wrapper glass-card">
-                <ul class="content-list">
-                    <li>Проведение код-ревью для других разработчиков</li>
-                    <li>Выявление и устранение технического долга в критических модулях</li>
-                    <li>Поддержка стандартов написания кода</li>
-                </ul>
+            <div>
+                <h2>Качество кода и процессы</h2>
+                <div class="content-wrapper glass-card">
+                    <ul class="content-list">
+                        <li>Проведение код-ревью для других разработчиков</li>
+                        <li>Выявление и устранение технического долга в критических модулях</li>
+                        <li>Поддержка стандартов написания кода</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
@@ -713,23 +764,25 @@
     <!-- Slide 8: Future Plans -->
     <div class="slide">
         <div class="container">
-            <h2>Планы на будущее</h2>
-            <div class="split-layout">
-                <div class="glass-card split-card">
-                    <h3>Архитектура и паттерны</h3>
-                    <ul>
-                        <li>Проектирование масштабируемой и поддерживаемой архитектуры</li>
-                        <li>Повышение типобезопасности</li>
-                        <li>Расширение библиотеки переиспользуемых компонентов и утилит</li>
-                    </ul>
-                </div>
-                <div class="glass-card split-card">
-                    <h3>Команда и процессы</h3>
-                    <ul>
-                        <li>Взаимодействие с backend-командой для оптимизации API</li>
-                        <li>Менторство новых разработчиков при расширении команды</li>
-                        <li>Уменьшение количества багов через правильный дизайн компонентов</li>
-                    </ul>
+            <div>
+                <h2>Планы на будущее</h2>
+                <div class="split-layout">
+                    <div class="glass-card split-card">
+                        <h3>Архитектура и паттерны</h3>
+                        <ul>
+                            <li>Проектирование масштабируемой и поддерживаемой архитектуры</li>
+                            <li>Повышение типобезопасности</li>
+                            <li>Расширение библиотеки переиспользуемых компонентов и утилит</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card split-card">
+                        <h3>Команда и процессы</h3>
+                        <ul>
+                            <li>Взаимодействие с backend-командой для оптимизации API</li>
+                            <li>Менторство новых разработчиков при расширении команды</li>
+                            <li>Уменьшение количества багов через правильный дизайн компонентов</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -738,8 +791,10 @@
     <!-- Slide 9: Closing -->
     <div class="slide title-slide">
         <div class="container">
-            <h1>Спасибо!</h1>
-            <div class="footer">Saint Petersburg • Frontend Developer</div>
+            <div>
+                <h1>Спасибо!</h1>
+                <div class="footer">Saint Petersburg • Frontend Developer</div>
+            </div>
         </div>
     </div>
 
@@ -753,7 +808,7 @@
 
 <!-- Slide Counter -->
 <div class="slide-counter">
-    <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
+    <span id="currentSlide">1</span> / <span id="totalSlides">8</span>
 </div>
 
 <script>
@@ -804,6 +859,14 @@
 
             if (index === currentSlide) {
                 slide.classList.add('active');
+                // Reset animations by removing and re-adding the animation
+                const cards = slide.querySelectorAll('.glass-card');
+                cards.forEach(card => {
+                    card.style.animation = 'none';
+                    setTimeout(() => {
+                        card.style.animation = '';
+                    }, 10);
+                });
             } else if (index < currentSlide) {
                 slide.classList.add('prev');
             }
@@ -846,7 +909,7 @@
     document.addEventListener('keydown', (e) => {
         if (imageModal.classList.contains('active')) return;
 
-        switch(e.key) {
+        switch (e.key) {
             case 'ArrowRight':
             case ' ':
                 e.preventDefault();
@@ -881,8 +944,8 @@
 
         wheelTimeout = setTimeout(() => {
             wheelTimeout = null;
-        }, 100); 
-    }, { passive: false });
+        }, 500); // 500ms debounce
+    }, {passive: false});
 
     // Touch/Swipe support
     let touchStartX = 0;
