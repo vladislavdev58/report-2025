@@ -313,12 +313,79 @@
             border-radius: 15px;
             border: 2px solid var(--glass-border);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .image-gallery img:hover {
             transform: scale(1.05);
             border-color: var(--accent-primary);
             box-shadow: 0 10px 40px rgba(0, 217, 255, 0.4);
+        }
+
+        /* ==================== IMAGE MODAL ==================== */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .image-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 10px;
+            box-shadow: 0 20px 80px rgba(0, 217, 255, 0.5);
+            animation: modalZoomIn 0.3s ease;
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .image-modal-close:hover {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+            transform: rotate(90deg);
+        }
+
+        @keyframes modalZoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         /* ==================== TITLE SLIDE ==================== */
@@ -515,26 +582,32 @@
 </head>
 <body>
 
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
 
-    <!-- Presentation Container -->
-    <div class="presentation" id="presentation">
-        <div class="logo">
-            <img src="./img/logo.png" alt="Logo">
-        </div>
-        <!-- Slide 1: Title -->
-        <div class="slide active title-slide">
-            <div class="container">
+<!-- Image Modal -->
+<div class="image-modal" id="imageModal">
+    <button class="image-modal-close" id="modalClose">✕</button>
+    <img id="modalImage" src="" alt="Enlarged view">
+</div>
+
+<!-- Presentation Container -->
+<div class="presentation" id="presentation">
+    <div class="logo">
+        <img src="./img/logo.png" alt="Logo">
+    </div>
+    <!-- Slide 1: Title -->
+    <div class="slide active title-slide">
+        <div class="container">
             <h1>Ключевые достижения<br>и планы развития</h1>
             <p class="role">Frontend Developer</p>
             <div class="footer">Saint Petersburg • 2025</div>
-            </div>
         </div>
+    </div>
 
-        <!-- Slide 2: Overview Grid -->
-        <div class="slide">
-            <div class="container">
+    <!-- Slide 2: Overview Grid -->
+    <div class="slide">
+        <div class="container">
             <h2>Обзор достижений</h2>
             <div class="overview-grid">
                 <div class="glass-card overview-card">
@@ -550,12 +623,12 @@
                     <p>Переиспользуемые и масштабируемые решения</p>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
 
-        <!-- Slide 3: Monitoring System -->
-        <div class="slide">
-            <div class="container">
+    <!-- Slide 3: Monitoring System -->
+    <div class="slide">
+        <div class="container">
             <h2>Дашборды мониторинга на ECharts</h2>
             <div class="content-wrapper glass-card">
                 <ul class="content-list">
@@ -565,12 +638,12 @@
                     <li>Переиспользуемая архитектура компонентов для легкого добавления новых типов графиков</li>
                 </ul>
             </div>
-            </div>
         </div>
+    </div>
 
-        <!-- Slide 4: PromQL Editor -->
-        <div class="slide">
-            <div class="container">
+    <!-- Slide 4: PromQL Editor -->
+    <div class="slide">
+        <div class="container">
             <h2>Редактор PromQL запросов</h2>
             <div class="content-wrapper glass-card">
                 <ul class="content-list">
@@ -579,25 +652,25 @@
                     <li>Автодополнение метрик и операторов для ускорения написания запросов</li>
                 </ul>
             </div>
-            </div>
         </div>
+    </div>
 
-        <!-- Slide 5: Image Gallery -->
-        <div class="slide">
-            <div class="container">
+    <!-- Slide 5: Image Gallery -->
+    <div class="slide">
+        <div class="container">
             <h2>Примеры реализации</h2>
             <div class="image-gallery">
-                <img src="./img/1.jpg" alt="Screenshot 1">
-                <img src="./img/2.jpg" alt="Screenshot 2">
-                <img src="./img/3.jpg" alt="Screenshot 3">
-                <img src="./img/4.jpg" alt="Screenshot 4">
-            </div>
+                <img src="./img/1.jpg" alt="Screenshot 1" class="gallery-image">
+                <img src="./img/2.jpg" alt="Screenshot 2" class="gallery-image">
+                <img src="./img/3.jpg" alt="Screenshot 3" class="gallery-image">
+                <img src="./img/4.jpg" alt="Screenshot 4" class="gallery-image">
             </div>
         </div>
+    </div>
 
-        <!-- Slide 6: Forms Refactoring -->
-        <div class="slide">
-            <div class="container">
+    <!-- Slide 6: Forms Refactoring -->
+    <div class="slide">
+        <div class="container">
             <h2>Рефакторинг форм и состояния</h2>
             <div class="split-layout">
                 <div class="glass-card split-card">
@@ -620,12 +693,12 @@
                     </ul>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
 
-        <!-- Slide 7: Code Quality -->
-        <div class="slide">
-            <div class="container">
+    <!-- Slide 7: Code Quality -->
+    <div class="slide">
+        <div class="container">
             <h2>Качество кода и процессы</h2>
             <div class="content-wrapper glass-card">
                 <ul class="content-list">
@@ -634,12 +707,12 @@
                     <li>Поддержка стандартов написания кода</li>
                 </ul>
             </div>
-            </div>
         </div>
+    </div>
 
-        <!-- Slide 8: Future Plans -->
-        <div class="slide">
-            <div class="container">
+    <!-- Slide 8: Future Plans -->
+    <div class="slide">
+        <div class="container">
             <h2>Планы на будущее</h2>
             <div class="split-layout">
                 <div class="glass-card split-card">
@@ -659,147 +732,178 @@
                     </ul>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
 
-        <!-- Slide 9: Closing -->
-        <div class="slide title-slide">
-            <div class="container">
+    <!-- Slide 9: Closing -->
+    <div class="slide title-slide">
+        <div class="container">
             <h1>Спасибо!</h1>
             <div class="footer">Saint Petersburg • Frontend Developer</div>
-            </div>
         </div>
-
     </div>
 
-    <!-- Navigation Controls -->
-    <div class="nav-controls">
-        <button class="nav-btn" id="prevBtn">←</button>
-        <button class="nav-btn" id="nextBtn">→</button>
-    </div>
+</div>
 
-    <!-- Slide Counter -->
-    <div class="slide-counter">
-        <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
-    </div>
+<!-- Navigation Controls -->
+<div class="nav-controls">
+    <button class="nav-btn" id="prevBtn">←</button>
+    <button class="nav-btn" id="nextBtn">→</button>
+</div>
 
-    <script>
-        // ==================== PRESENTATION LOGIC ====================
+<!-- Slide Counter -->
+<div class="slide-counter">
+    <span id="currentSlide">1</span> / <span id="totalSlides">9</span>
+</div>
 
-        const slides = document.querySelectorAll('.slide');
-        const totalSlides = slides.length;
-        let currentSlide = 0;
+<script>
+    // ==================== PRESENTATION LOGIC ====================
 
-        const progressBar = document.getElementById('progressBar');
-        const currentSlideElement = document.getElementById('currentSlide');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentSlide = 0;
 
-        // ==================== UPDATE SLIDE ====================
-        function updateSlide() {
-            slides.forEach((slide, index) => {
-                slide.classList.remove('active', 'prev');
+    const progressBar = document.getElementById('progressBar');
+    const currentSlideElement = document.getElementById('currentSlide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
 
-                if (index === currentSlide) {
-                    slide.classList.add('active');
-                } else if (index < currentSlide) {
-                    slide.classList.add('prev');
-                }
-            });
+    // ==================== IMAGE MODAL ====================
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalClose = document.getElementById('modalClose');
+    const galleryImages = document.querySelectorAll('.gallery-image');
 
-            // Update progress bar
-            const progress = ((currentSlide + 1) / totalSlides) * 100;
-            progressBar.style.width = progress + '%';
+    galleryImages.forEach(img => {
+        img.addEventListener('click', () => {
+            modalImage.src = img.src;
+            imageModal.classList.add('active');
+        });
+    });
 
-            // Update counter
-            currentSlideElement.textContent = currentSlide + 1;
+    modalClose.addEventListener('click', () => {
+        imageModal.classList.remove('active');
+    });
 
-            // Update button states
-            prevBtn.disabled = currentSlide === 0;
-            nextBtn.disabled = currentSlide === totalSlides - 1;
+    imageModal.addEventListener('click', (e) => {
+        if (e.target === imageModal) {
+            imageModal.classList.remove('active');
         }
+    });
 
-        // ==================== NAVIGATION FUNCTIONS ====================
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateSlide();
-            }
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+            imageModal.classList.remove('active');
         }
+    });
 
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateSlide();
-            }
-        }
+    // ==================== UPDATE SLIDE ====================
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.remove('active', 'prev');
 
-        // ==================== EVENT LISTENERS ====================
-
-        // Button navigation
-        nextBtn.addEventListener('click', nextSlide);
-        prevBtn.addEventListener('click', prevSlide);
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            switch(e.key) {
-                case 'ArrowRight':
-                case ' ':
-                    e.preventDefault();
-                    nextSlide();
-                    break;
-                case 'ArrowLeft':
-                    e.preventDefault();
-                    prevSlide();
-                    break;
-                case 'f':
-                case 'F':
-                    toggleFullscreen();
-                    break;
+            if (index === currentSlide) {
+                slide.classList.add('active');
+            } else if (index < currentSlide) {
+                slide.classList.add('prev');
             }
         });
 
-        // Touch/Swipe support
-        let touchStartX = 0;
-        let touchEndX = 0;
+        // Update progress bar
+        const progress = ((currentSlide + 1) / totalSlides) * 100;
+        progressBar.style.width = progress + '%';
 
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, false);
+        // Update counter
+        currentSlideElement.textContent = currentSlide + 1;
 
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, false);
+        // Update button states
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === totalSlides - 1;
+    }
 
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-
-            if (Math.abs(diff) > swipeThreshold) {
-                if (diff > 0) {
-                    nextSlide();
-                } else {
-                    prevSlide();
-                }
-            }
+    // ==================== NAVIGATION FUNCTIONS ====================
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+            updateSlide();
         }
+    }
 
-        // ==================== FULLSCREEN ====================
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(err => {
-                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
-                });
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateSlide();
+        }
+    }
+
+    // ==================== EVENT LISTENERS ====================
+
+    // Button navigation
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (imageModal.classList.contains('active')) return;
+
+        switch(e.key) {
+            case 'ArrowRight':
+            case ' ':
+                e.preventDefault();
+                nextSlide();
+                break;
+            case 'ArrowLeft':
+                e.preventDefault();
+                prevSlide();
+                break;
+            case 'f':
+            case 'F':
+                toggleFullscreen();
+                break;
+        }
+    });
+
+    // Touch/Swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    document.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                nextSlide();
             } else {
-                if (document.exitFullscreen) {
-                    document.exitFullscreen();
-                }
+                prevSlide();
             }
         }
+    }
 
-        // ==================== INITIALIZATION ====================
-        updateSlide();
-    </script>
+    // ==================== FULLSCREEN ====================
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen().catch(err => {
+                console.log(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+    }
+
+    // ==================== INITIALIZATION ====================
+    updateSlide();
+</script>
 </body>
 </html>
