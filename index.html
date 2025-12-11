@@ -88,7 +88,16 @@
             justify-content: space-between;
             align-items: center;
             max-width: 1640px;
+            width: 100%;
             margin: 0 auto;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100%;
         }
 
         .slide.active {
@@ -641,7 +650,8 @@
     <!-- Slide 1: Title -->
     <div class="slide active title-slide">
         <div class="container">
-            <div><h1>Ключевые достижения<br>и планы развития</h1>
+            <div class="item">
+                <h1>Ключевые достижения<br>и планы развития</h1>
                 <p class="role">Frontend Developer</p>
                 <div class="footer">Saint Petersburg • 2025</div>
             </div>
@@ -651,8 +661,8 @@
     <!-- Slide 2: Overview Grid -->
     <div class="slide">
         <div class="container">
-            <div>
-                <h2>Обзор достижений</h2>
+            <div class="item">
+                <h2 style="margin-right: auto">Обзор достижений</h2>
                 <div class="overview-grid">
                     <div class="glass-card overview-card">
                         <h3>Дашборды мониторинга на ECharts</h3>
@@ -685,19 +695,19 @@
                     </ul>
                 </div>
             </div>
-            <div class="image-gallery" style="grid-template-columns: 1fr; width: 620px;">
-                <img src="./img/5.png" class="gallery-image" alt="">
-                <img src="./img/6.png" class="gallery-image" alt="">
+            <div class="image-gallery" style="grid-template-columns: 1fr; grid-template-rows: 1fr 1fr;width: 620px; align-items: center">
+                <img src="./img/5.png" class="gallery-image" style="width: 100%;height: auto" alt="">
+                <img src="./img/6.png" class="gallery-image" style="width: 100%;height: auto" alt="">
             </div>
         </div>
     </div>
 
     <!-- Slide 4: PromQL Editor -->
     <div class="slide">
-        <h2>Редактор PromQL запросов</h2>
         <div class="container">
             <div>
-                <div class="content-wrapper glass-card">
+                <h2>Редактор PromQL запросов</h2>
+                <div class="content-wrapper glass-card" >
                     <ul class="content-list">
                         <li>Динамическая подгрузка доступных метрик и операторов из системы мониторинга</li>
                         <li>Реализация подсветки синтаксиса для повышения читаемости запросов</li>
@@ -717,9 +727,9 @@
     <!-- Slide 6: Forms Refactoring -->
     <div class="slide">
         <div class="container">
-            <div>
+            <div style="width: 100%;">
                 <h2>Рефакторинг форм и состояния</h2>
-                <div class="split-layout">
+                <div class="split-layout" style="width: 100%">
                     <div class="glass-card split-card">
                         <h3>Миграция на Ant Design Form</h3>
                         <ul>
@@ -748,8 +758,8 @@
     <!-- Slide 7: Code Quality -->
     <div class="slide">
         <div class="container">
+            <h2 style="margin: 0">Качество кода и процессы</h2>
             <div>
-                <h2>Качество кода и процессы</h2>
                 <div class="content-wrapper glass-card">
                     <ul class="content-list">
                         <li>Проведение код-ревью для других разработчиков</li>
@@ -764,7 +774,7 @@
     <!-- Slide 8: Future Plans -->
     <div class="slide">
         <div class="container">
-            <div>
+            <div style="width: 100%;">
                 <h2>Планы на будущее</h2>
                 <div class="split-layout">
                     <div class="glass-card split-card">
@@ -791,7 +801,7 @@
     <!-- Slide 9: Closing -->
     <div class="slide title-slide">
         <div class="container">
-            <div>
+            <div style="width: 100%;">
                 <h1>Спасибо!</h1>
                 <div class="footer">Saint Petersburg • Frontend Developer</div>
             </div>
